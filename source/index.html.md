@@ -1,239 +1,228 @@
 ---
-title: API Reference
-
-language_tabs: # must be one of https://git.io/vQNgJ
-  - shell
-  - ruby
+title: Wevolver API Reference
+language_tabs:
   - python
-  - javascript
-
-toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='https://github.com/tripit/slate'>Documentation Powered by Slate</a>
-
-includes:
-  - errors
-
-search: true
 ---
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Welcome to the *Groot* API! Using *Groot* you'll be able to interact with a git backend ( self-hosted or local ) to create and manipulate repositories.
 
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+```
+API Endpoint
+http://localhost:8000
 
-This example API documentation page was created with [Slate](https://github.com/tripit/slate). Feel free to edit it and use it as a base for your own API's documentation.
-
+Summary of Resources:
+/create/username/projectname
+/raw/username/projectname
+/username/projectname/delete
+/username/projectname?path=
+/username/projectname/listbom
+/username/projectname/newfolder
+/username/projectname/download?path=
+/username/projectname/upload
+/username/projectname/archive
+/username/projectname/archive/download
+```
 # Authentication
 
-> To authorize, use this code:
+Authentication is disabled when Django's debug setting is set to True. When Authentication is enabled
+you will not be able to use any of the endpoints.
 
-```ruby
-require 'kittn'
+# Usage
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
+Run *Groot*
+
+```bash
+python manage.py runserver
 ```
+
+Then either interact programmatically using the examples in this document, or use Postman
+and *Groot's* Postman collection
+
+# Endpoints
+
+## Get Raw File
+
+Gets the raw contents of the file at the specified path.
 
 ```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-```
-
-```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-```
-
-> Make sure to replace `meowmeowmeow` with your API key.
-
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
-
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
-
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
-
-# Kittens
-
-## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
-
-```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
+python import requests
+requests.get("/raw/<username>/<projectname>?path=readme.md")
 ```
 
 > The above command returns JSON structured like this:
 
-```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
+```markdown
+#projectname
+This is where you should document your project  
+### Getting Started
 ```
 
-This endpoint retrieves all kittens.
+### HTTP Request
+`GET /raw/<username>/<projectname>?path=readme.md`
+
+## Delete Project
+
+Deletes the specified project.
+
+```python
+python import requests
+requests.get("/<username>/<projectname>/delete")
+```
+
+> The above command returns a message structured like this:
+
+```json
+Deleted at ./repos/username/projectname
+```
 
 ### HTTP Request
 
-`GET http://example.com/api/kittens`
+`GET /<username>/<projectname>/delete`
 
-### Query Parameters
+## Download Archive
 
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
+Downloads a zipped archive of the whole project.
 
 ```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
+python import requests
 ```
 
-```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
+> The above command returns JSON structured like this:
+
+### HTTP Request
+
+`LOCK /<username>/<projectname>/archive/download`
+
+## Upload File
+
+Uploads the attached file to the specified path.
+
+```python
+python import requests
 ```
 
-```javascript
-const kittn = require('kittn');
+> The above command returns JSON structured like this:
 
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
+### HTTP Request
+
+`LOCK /<username>/<projectname>/upload`
+
+## Download File
+
+Returns the contents of the file at the specified path.
+
+```python
+python import requests
+requests.get("/<username>/<projectname>/download?path=readme.md")
+```
+
+> The above command returns JSON structured like this:
+
+```markdown
+#mytest
+This is where you should document your project  
+### Getting Started
+```
+### HTTP Request
+
+`GET /<username>/<projectname>/download?path=readme.md`
+
+## Create Folder
+
+Creates a new folder in the given directory. The folder path is specified by the
+path parameter of the POST.
+
+```python
+python import requests
+requests.post("/<username>/<projectname>/newfolder")
 ```
 
 > The above command returns JSON structured like this:
 
 ```json
 {
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+    "message": "Folder Created"
 }
 ```
 
-This endpoint retrieves a specific kitten.
+### HTTP Request
 
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+`POST /<username>/<projectname>/newfolder`
+
+## List Full Bom
+
+Looks through the entire project for any file named `bom.csv`. Each of these
+files are concatenated and, once duplicates are removed, the master BOM is returned.
+
+```python
+python import requests
+requests.get("/<username>/<projectname>/listbom")
+```
+
+> The above command returns JSON structured like this:
 
 ### HTTP Request
 
-`GET http://example.com/kittens/<ID>`
+`GET /<username>/<projectname>/listbom`
 
-### URL Parameters
+## Get File Tree
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
+Grabs and returns a single file or a tree from a user's repository
 
-## Delete a Specific Kitten
+if the requested object is a tree the function parses it instead
+of returning blindly.
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
-```
+**This naming makes no sense**
 
 ```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -X DELETE
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
+python import requests
+requests.get("/<username>/<projectname>?path=/")
 ```
 
 > The above command returns JSON structured like this:
 
 ```json
 {
-  "id": 2,
-  "deleted" : ":("
+    "file": null,
+    "tree": {
+        "data": [
+            {
+                "name": "new",
+                "type": "tree",
+                "oid": "7b93b85c3a2aba0d510cc223ba15501b8c6283d5"
+            },
+            {
+                "name": "readme.md",
+                "type": "blob",
+                "oid": "63c3ffbf73a78311a168a6949ec6bce690faa74e"
+            }
+        ]
+    }
 }
 ```
 
-This endpoint retrieves a specific kitten.
-
 ### HTTP Request
 
-`DELETE http://example.com/kittens/<ID>`
+`GET /<username>/<projectname>?path=/`
 
-### URL Parameters
+## Create Project
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to delete
+Creates a bare repository with the provided username and projectname.
+The directory structure is generated uniquely using a hash of the username.
+See: [here](https://github.com/blog/117-scaling-lesson-23742)
 
+```python
+python import requests
+requests.get("/create/<username>/<projectname>")
+```
+
+> The above command returns JSON structured like this:
+
+```json
+Created at ./repos/username/projectname
+```
+### HTTP Request
+
+ `GET /create/<username>/<projectname>`
