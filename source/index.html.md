@@ -2,32 +2,36 @@
 title: Wevolver API Reference
 language_tabs:
   - python
+  - bash
 ---
 
 # Introduction
 
-Welcome to the *Groot* API! Using *Groot* you'll be able to interact with a git backend ( self-hosted or local ) to create and manipulate repositories.
+Welcome to the *Groot* API! Using *Groot* you'll be able to interact with a git backend
+( self-hosted or local ) to create and manipulate repositories.
 
 ```
 API Endpoint
 http://localhost:8000
 
 Summary of Resources:
-/create/username/projectname
-/raw/username/projectname
+/username/projectname/create
 /username/projectname/delete
-/username/projectname?path=
-/username/projectname/listbom
+/username/projectname/readfile?path=
 /username/projectname/newfolder
-/username/projectname/download?path=
-/username/projectname/upload
-/username/projectname/archive
+/username/projectname/listbom
 /username/projectname/archive/download
+/username/projectname/upload
+/username/projectname?path=
 ```
 # Authentication
 
 Authentication is disabled when Django's debug setting is set to True. When Authentication is enabled
-you will not be able to use any of the endpoints.
+you will not be able to use any of the endpoints without rolling out and connecting your own Authentication/Authorization service. Authentication and permissions are handled by by the permissions app.
+
+```
+DEBUG = true
+```
 
 # Usage
 
@@ -42,25 +46,30 @@ and *Groot's* Postman collection
 
 # Endpoints
 
-## Get Raw File
+## Create Project
 
-Gets the raw contents of the file at the specified path.
+Creates a bare repository with the provided username and project name.
+The directory structure is generated uniquely using a hash of the username.
+See: [here](https://github.com/blog/117-scaling-lesson-23742)
 
 ```python
 python import requests
-requests.get("/raw/<username>/<projectname>?path=readme.md")
+requests.post("/wevolver/mytest/create")
 ```
 
-> The above command returns JSON structured like this:
+```bash
+curl -X POST '/wevolver/mytest/create'
+```
 
-```markdown
-#projectname
-This is where you should document your project  
-### Getting Started
+> The above command creates wevolver's project mytest and returns a message structured like this:
+
+```json
+Created at ./repos/wevolver/mytest
 ```
 
 ### HTTP Request
-`GET /raw/<username>/<projectname>?path=readme.md`
+
+ `POST /create/<username>/<projectname>`
 
 ## Delete Project
 
@@ -68,10 +77,14 @@ Deletes the specified project.
 
 ```python
 python import requests
-requests.get("/<username>/<projectname>/delete")
+requests.post("/wevolver/mytest/delete")
 ```
 
-> The above command returns a message structured like this:
+```bash
+curl -X POST '/wevolver/mytest/delete'
+```
+
+> The above command deletes wevolver's project mytest and returns a message structured like this:
 
 ```json
 Deleted at ./repos/username/projectname
@@ -81,53 +94,29 @@ Deleted at ./repos/username/projectname
 
 `GET /<username>/<projectname>/delete`
 
-## Download Archive
+## Read File
 
-Downloads a zipped archive of the whole project.
-
-```python
-python import requests
-```
-
-> The above command returns JSON structured like this:
-
-### HTTP Request
-
-`LOCK /<username>/<projectname>/archive/download`
-
-## Upload File
-
-Uploads the attached file to the specified path.
+Gets the raw contents of the file at the specified path.
 
 ```python
 python import requests
+requests.get("/wevolver/mytest/readfile?path=readme.md")
 ```
 
-> The above command returns JSON structured like this:
-
-### HTTP Request
-
-`LOCK /<username>/<projectname>/upload`
-
-## Download File
-
-Returns the contents of the file at the specified path.
-
-```python
-python import requests
-requests.get("/<username>/<projectname>/download?path=readme.md")
+```bash
+curl -X GET '/wevolver/mytest/readfile?path=readme.md'
 ```
 
-> The above command returns JSON structured like this:
+> The above command gets the file readme.md from wevolver's project my test and returns it structured like this:
 
 ```markdown
 #mytest
 This is where you should document your project  
 ### Getting Started
 ```
-### HTTP Request
 
-`GET /<username>/<projectname>/download?path=readme.md`
+### HTTP Request
+`GET /<username>/<projectname>/readfile?path=readme.md`
 
 ## Create Folder
 
@@ -136,10 +125,14 @@ path parameter of the POST.
 
 ```python
 python import requests
-requests.post("/<username>/<projectname>/newfolder")
+requests.post("/wevolver/wevolver/newfolder")
 ```
 
-> The above command returns JSON structured like this:
+```bash
+curl -X POST '/wevolver/mytest/newfolder'
+```
+
+> The above command creates the newfoler in wevolver's project mytest returns JSON structured like this:
 
 ```json
 {
@@ -151,6 +144,25 @@ requests.post("/<username>/<projectname>/newfolder")
 
 `POST /<username>/<projectname>/newfolder`
 
+## Upload File
+
+Uploads the attached files to the specified path.
+
+```python
+python import requests
+request.post(???)
+```
+
+```bash
+curl -X POST '/wevolver/mytest/???'
+```
+
+> The above command returns JSON structured like this:
+
+### HTTP Request
+
+`LOCK /<username>/<projectname>/upload`
+
 ## List Full Bom
 
 Looks through the entire project for any file named `bom.csv`. Each of these
@@ -158,30 +170,53 @@ files are concatenated and, once duplicates are removed, the master BOM is retur
 
 ```python
 python import requests
-requests.get("/<username>/<projectname>/listbom")
+requests.get("/wevolver/mytest/listbom")
 ```
 
-> The above command returns JSON structured like this:
+```bash
+curl -X GET '/wevolver/mytest/listbom'
+```
+
+> The above command returns wevolver's project mytest's full bom as JSON structured like this:
 
 ### HTTP Request
 
 `GET /<username>/<projectname>/listbom`
 
-## Get File Tree
+## Download Archive
 
-Grabs and returns a single file or a tree from a user's repository
-
-if the requested object is a tree the function parses it instead
-of returning blindly.
-
-**This naming makes no sense**
+Grabs and returns a user's repository as a tarball.
 
 ```python
 python import requests
-requests.get("/<username>/<projectname>?path=/")
+requests.get('/wevolver/mytest/download/archive')
 ```
 
-> The above command returns JSON structured like this:
+```bash
+curl -X GET '/wevolver/mytest/download/archive'
+```
+
+> The above command downloads the project directory zipped
+
+### HTTP Request
+
+`LOCK /<username>/<projectname>/archive/download`
+
+## Read File Tree
+
+Grabs and returns a single file or a tree from a user's repository.
+The requested tree is first parsed into JSON.
+
+```python
+python import requests
+requests.get("/wevolver/mytest?path=/")
+```
+
+```bash
+curl -X GET '/wevolver/mytest?path=/'
+```
+
+> The above command reads wevolver's project mytest at path / and returns JSON structured like this:
 
 ```json
 {
@@ -206,23 +241,3 @@ requests.get("/<username>/<projectname>?path=/")
 ### HTTP Request
 
 `GET /<username>/<projectname>?path=/`
-
-## Create Project
-
-Creates a bare repository with the provided username and projectname.
-The directory structure is generated uniquely using a hash of the username.
-See: [here](https://github.com/blog/117-scaling-lesson-23742)
-
-```python
-python import requests
-requests.get("/create/<username>/<projectname>")
-```
-
-> The above command returns JSON structured like this:
-
-```json
-Created at ./repos/username/projectname
-```
-### HTTP Request
-
- `GET /create/<username>/<projectname>`
