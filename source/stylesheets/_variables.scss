@@ -1,20 +1,3 @@
-/*
-Copyright 2008-2013 Concur Technologies, Inc.
-
-Licensed under the Apache License, Version 2.0 (the "License"); you may
-not use this file except in compliance with the License. You may obtain
-a copy of the License at
-
-  http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
-License for the specific language governing permissions and limitations
-under the License.
-*/
-
-
 ////////////////////////////////////////////////////////////////////////////////
 // CUSTOMIZE SLATE
 ////////////////////////////////////////////////////////////////////////////////
@@ -24,72 +7,82 @@ under the License.
 // BACKGROUND COLORS
 ////////////////////
 $nav-bg: #f5f4f9 !default;
-$examples-bg: #2E3336 !default;
-$code-bg: #1E2224 !default;
-$code-annotation-bg: #191D1F !default;
 $nav-subitem-bg: #f5f4f9 !default;
 $nav-active-bg: #00B8F4 !default;
 $nav-active-parent-bg: #00B8F4 !default; // parent links of the current section
-$lang-select-border: #000 !default;
-$lang-select-bg: #1E2224 !default;
-$lang-select-active-bg: $examples-bg !default; // feel free to change this to blue or something
-$lang-select-pressed-bg: #111 !default; // color of language tab bg when mouse is pressed
-$main-bg: #F3F7F9 !default;
-$aside-notice-bg: #8fbcd4 !default;
-$aside-warning-bg: #c97a7e !default;
-$aside-success-bg: #6ac174 !default;
-$search-notice-bg: #c97a7e !default;
-
+$examples-bg: #293953;
+$code-bg: #212D42;
+$code-annotation-bg: #293953;
+$lang-select-border: #000;
+$lang-select-bg: #293953;
+$lang-select-active-bg: #00B8F4;
+$lang-select-pressed-bg: #00B8F4;
+$main-bg: #FFFFFF;
+$aside-notice-bg: #1E70DD;
+$aside-warning-bg: #c97a7e;
+$aside-success-bg: #6ac174;
+$search-notice-bg: #c97a7e;
 
 // TEXT COLORS
 ////////////////////
-$main-text: #333 !default; // main content text color
-$nav-text: #333 !default;
-$nav-active-text: #fff !default;
-$nav-active-parent-text: #fff !default; // parent links of the current section
-$lang-select-text: #fff !default; // color of unselected language tab text
-$lang-select-active-text: #fff !default; // color of selected language tab text
-$lang-select-pressed-text: #fff !default; // color of language tab text when mouse is pressed
+$main-text: #0F0D08;
+$nav-text: #293953;
+$nav-active-text: #FFFFFF;
+$nav-active-parent-text: #FFFFFF;
+$lang-select-text: #fff;
+$lang-select-active-text: #FFFFFF;
+$lang-select-pressed-text: #FFFFFF;
+$aside-notice-text: #fff;
+$delete: #aa0011;
+$put: #1e70dd;
+$post: #ec7209;
+$get: #2db200;
 
 
 // SIZES
-////////////////////
-$nav-width: 230px !default; // width of the navbar
-$examples-width: 50% !default; // portion of the screen taken up by code examples
-$logo-margin: 2rem !default; // margin below logo
-$main-padding: 28px !default; // padding to left and right of content & examples
-$nav-padding: 15px !default; // padding to left and right of navbar
-$nav-v-padding: 20px !default; // padding used vertically around search boxes and results
-$nav-indent: 10px !default; // extra padding for ToC subitems
-$code-annotation-padding: 13px !default; // padding inside code annotations
-$h1-margin-bottom: 21px !default; // padding under the largest header tags
-$tablet-width: 930px !default; // min width before reverting to tablet size
-$phone-width: $tablet-width - $nav-width !default; // min width before reverting to mobile size
+//
+$nav-width: 240px;
+$examples-width: 45%;
+$code-width: 59%;
+$logo-margin: 20px;
+$main-padding: 28px;
+$nav-padding: 15px;
+$nav-v-padding: 10px;
+$nav-indent: 10px;
+$code-annotation-padding: 13px;
+$h1-margin-bottom: 21px;
+$tablet-width: 930px;
+$phone-width: $tablet-width - $nav-width;
+$nav-item-text: 16px;
+$nav-subitem-text: 14px;
+$notice-table-text: 14px;
 
 
 // FONTS
 ////////////////////
 %default-font {
-  font-family: "HarmoniaSans W01", "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei";
-  font-size: 14px;
+  font-family: 'Helvetica LT W01 Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 16px;
 }
 
 %header-font {
-  @extend %default-font;
+  font-family: 'sofia-pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: bold;
 }
 
 %code-font {
   font-family: Consolas, Menlo, Monaco, "Lucida Console", "Liberation Mono", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", monospace, serif;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.5;
 }
 
 
 // OTHER
 ////////////////////
-$nav-footer-border-color: #666 !default;
-$search-box-border-color: #666 !default;
+$nav-footer-border-color: #666;
+$nav-embossed-border-top: #000;
+$nav-embossed-border-bottom: #939393;
+$search-box-border-color: #666;
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -98,6 +91,10 @@ $search-box-border-color: #666 !default;
 // These settings are probably best left alone.
 
 %break-words {
-    word-break: break-all;
-    hyphens: auto;
+     word-break: break-all;
+
+     /* Non standard for webkit */
+     word-break: break-word;
+
+        hyphens: auto;
 }

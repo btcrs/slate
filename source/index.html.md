@@ -1,8 +1,8 @@
 ---
 title: Wevolver API Reference
 language_tabs:
-  - python
-  - bash
+  - python: Python
+  - shell : Curl
 ---
 
 # Introduction
@@ -37,12 +37,22 @@ DEBUG = true
 
 Run *Groot*
 
-```bash
+```
 python manage.py runserver
 ```
 
 Then either interact programmatically using the examples in this document, or use Postman
 and *Groot's* Postman collection
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/085b6696a9590b87504b)
+
+```json
+Environment = {
+  "user": "wevovler (user)",
+  "project": "mytest (project)",
+  "api": "http://localhost:8000"
+}
+```
 
 # Endpoints
 
@@ -57,7 +67,7 @@ python import requests
 requests.post("/wevolver/mytest/create")
 ```
 
-```bash
+```shell
 curl -X POST '/wevolver/mytest/create'
 ```
 
@@ -80,7 +90,7 @@ python import requests
 requests.post("/wevolver/mytest/delete")
 ```
 
-```bash
+```shell
 curl -X POST '/wevolver/mytest/delete'
 ```
 
@@ -103,7 +113,7 @@ python import requests
 requests.get("/wevolver/mytest/readfile?path=readme.md")
 ```
 
-```bash
+```shell
 curl -X GET '/wevolver/mytest/readfile?path=readme.md'
 ```
 
@@ -128,7 +138,7 @@ python import requests
 requests.post("/wevolver/wevolver/newfolder")
 ```
 
-```bash
+```shell
 curl -X POST '/wevolver/mytest/newfolder'
 ```
 
@@ -153,7 +163,7 @@ python import requests
 request.post(???)
 ```
 
-```bash
+```shell
 curl -X POST '/wevolver/mytest/???'
 ```
 
@@ -173,7 +183,7 @@ python import requests
 requests.get("/wevolver/mytest/listbom")
 ```
 
-```bash
+```shell
 curl -X GET '/wevolver/mytest/listbom'
 ```
 
@@ -192,7 +202,7 @@ python import requests
 requests.get('/wevolver/mytest/download/archive')
 ```
 
-```bash
+```shell
 curl -X GET '/wevolver/mytest/download/archive'
 ```
 
@@ -212,7 +222,7 @@ python import requests
 requests.get("/wevolver/mytest?path=/")
 ```
 
-```bash
+```shell
 curl -X GET '/wevolver/mytest?path=/'
 ```
 
