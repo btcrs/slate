@@ -74,7 +74,7 @@ curl -X POST '/wevolver/mytest/create'
 > The above command creates wevolver's project mytest and returns a message structured like this:
 
 ```json
-Created at ./repos/wevolver/mytest
+{"message": "Created at ./repos/wevolver/mytest"}
 ```
 
 ### HTTP Request
@@ -97,7 +97,7 @@ curl -X POST '/wevolver/mytest/delete'
 > The above command deletes wevolver's project mytest and returns a message structured like this:
 
 ```json
-Deleted at ./repos/username/projectname
+{"message": "Deleted at ./repos/wevolver/myest"}
 ```
 
 ### HTTP Request
@@ -160,18 +160,19 @@ Uploads the attached files to the specified path.
 
 ```python
 python import requests
-request.post(???)
-```
-
-```shell
-curl -X POST '/wevolver/mytest/???'
+with open('path') as fp:
+    response = self.client.post('/{}/{}/upload?path={}'.format(user, app, "test.json"), {'file': fp})
 ```
 
 > The above command returns JSON structured like this:
 
+```json
+{"message": "Files uploaded"}
+```
+
 ### HTTP Request
 
-`LOCK /<username>/<projectname>/upload`
+`POST /<username>/<projectname>/upload?path=`
 
 ## List Full Bom
 
@@ -188,6 +189,11 @@ curl -X GET '/wevolver/mytest/listbom'
 ```
 
 > The above command returns wevolver's project mytest's full bom as JSON structured like this:
+
+```
+name, url, quantity, price
+test, google.com, 1, 1
+```
 
 ### HTTP Request
 
@@ -210,7 +216,7 @@ curl -X GET '/wevolver/mytest/download/archive'
 
 ### HTTP Request
 
-`LOCK /<username>/<projectname>/archive/download`
+`GET /<username>/<projectname>/archive/download`
 
 ## Read File Tree
 
