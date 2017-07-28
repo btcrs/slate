@@ -35,14 +35,14 @@ DEBUG = True
 
 # Usage
 
-Run Welder
+First run Welder.
 
 ```
 python manage.py runserver
 ```
 
-Then either interact programmatically using the examples in this document, or use Postman
-and Welder's Postman collection
+You can then either interact programmatically using the examples in this document or use Postman
+and Welder's Postman collection to send the API requests.
 
 [![Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/085b6696a9590b87504b#?env%5BGroot%20Environment%5D=W3siZW5hYmxlZCI6dHJ1ZSwia2V5IjoidXNlciIsInZhbHVlIjoiYmVuIiwidHlwZSI6InRleHQifSx7ImVuYWJsZWQiOnRydWUsImtleSI6InByb2plY3QiLCJ2YWx1ZSI6Im15IHRlc3QiLCJ0eXBlIjoidGV4dCJ9LHsiZW5hYmxlZCI6dHJ1ZSwia2V5IjoiYXBpIiwidmFsdWUiOiJodHRwczovL3Rlc3Qud2V2b2x2ZXIuY29tIiwidHlwZSI6InRleHQifV0=)
 
