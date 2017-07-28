@@ -1,5 +1,5 @@
 ---
-title: Wevolver API Reference
+title: Welder API Reference
 language_tabs:
   - python: Python
   - shell : Curl
@@ -7,8 +7,8 @@ language_tabs:
 
 # Introduction
 
-Welcome to the *Groot* API! Using *Groot* you'll be able to interact with a git backend
-( self-hosted or local ) to create and manipulate repositories.
+Welcome to the Welder API! Using Welder you'll be able to interact with a git backend,
+either self-hosted or local, to create and manipulate project repositories.
 
 ```
 API Endpoint
@@ -35,14 +35,14 @@ DEBUG = true
 
 # Usage
 
-Run *Groot*
+Run Welder
 
 ```
 python manage.py runserver
 ```
 
 Then either interact programmatically using the examples in this document, or use Postman
-and *Groot's* Postman collection
+and Welder's Postman collection
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/085b6696a9590b87504b)
 
