@@ -30,7 +30,7 @@ Authentication is disabled when Django's debug setting is set to True. When Auth
 you will not be able to use any of the endpoints without rolling out and connecting your own Authentication/Authorization service. Authentication and permissions are handled by by the permissions app.
 
 ```
-DEBUG = true
+DEBUG = True
 ```
 
 # Usage
@@ -44,7 +44,7 @@ python manage.py runserver
 Then either interact programmatically using the examples in this document, or use Postman
 and Welder's Postman collection
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/085b6696a9590b87504b)
+[![Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/085b6696a9590b87504b#?env%5BGroot%20Environment%5D=W3siZW5hYmxlZCI6dHJ1ZSwia2V5IjoidXNlciIsInZhbHVlIjoiYmVuIiwidHlwZSI6InRleHQifSx7ImVuYWJsZWQiOnRydWUsImtleSI6InByb2plY3QiLCJ2YWx1ZSI6Im15IHRlc3QiLCJ0eXBlIjoidGV4dCJ9LHsiZW5hYmxlZCI6dHJ1ZSwia2V5IjoiYXBpIiwidmFsdWUiOiJodHRwczovL3Rlc3Qud2V2b2x2ZXIuY29tIiwidHlwZSI6InRleHQifV0=)
 
 ```json
 Environment = {
